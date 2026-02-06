@@ -15,33 +15,39 @@ public class SitemaDoPetShop
     this.NomeDoPetShop = nomeDoPetShop;
   }
 
-  public void ExibirMenu()
+  public void ExibirMenuDeCadastro()
   {
     Console.Clear();
     Console.WriteLine("----- Bem-vindo ao " + NomeDoPetShop + " -----");
-    Console.WriteLine("1. Cadastrar Cliente");
-    Console.WriteLine("2. Cadastrar Pet");
-    Console.WriteLine("3. Exibir Clientes");
-    Console.WriteLine("4. Exibir Pets");
-    Console.WriteLine("5. Sair");
+    Console.WriteLine("1. Cadastrar Consultar");
+    Console.WriteLine("2. Cadastrar Cliente");
+    Console.WriteLine("3. Cadastrar Pet");
+    Console.WriteLine("4. Exibir Clientes");
+    Console.WriteLine("5. Exibir Pets");
+    Console.WriteLine("6. Sair");
     Console.Write("Escolha uma opção: ");
 
     string? opcao = Console.ReadLine();
     switch (opcao)
     {
       case "1":
-        //CadastrarCliente();
+        Console.WriteLine("Funcionalidade de cadastro de consulta ainda não implementada.");
+        Thread.Sleep(2000);
+        ExibirMenuDeCadastro();
         break;
       case "2":
-        CadastrarPet();
+        CadastrarCliente();
         break;
       case "3":
-        //ExibirClientes();
+        CadastrarPet();
         break;
       case "4":
-        //ExibirPets();
+        ExibirClientes();
         break;
       case "5":
+        ExibirPets();
+        break;
+      case "6":
         Console.WriteLine("Obrigado por usar o sistema do PetShop!");
         return;
       default:
@@ -49,7 +55,7 @@ public class SitemaDoPetShop
         break;
     }
   }
-// Metodos para cadastrar cliente, cadastrar pet, exibir clientes e exibir pets
+  // Metodos para cadastrar cliente, cadastrar pet, exibir clientes e exibir pets
   private void CadastrarPet()
   {
     Console.WriteLine("----- Cadastrar Pet -----");
@@ -73,7 +79,7 @@ public class SitemaDoPetShop
       }
       else
       {
-        ExibirClientesParaSelecao();
+        ExibirClientes();
         string? cpfDono = ValidadorEntrada.ObterString("Digite o CPF do dono: ");
 
         // Procurar cliente pela CPF
@@ -82,7 +88,7 @@ public class SitemaDoPetShop
         if (donoPet != null)
         {
           novoPet.Dono = donoPet;
-          donoPet.CadastrarPet(novoPet);
+          donoPet.CadastrarPetParaCliente(nome, idade, raca, peso);
           Console.WriteLine($"✅ Pet vinculado ao cliente {donoPet.Nome}!");
         }
         else
@@ -95,20 +101,10 @@ public class SitemaDoPetShop
     Pets.Add(novoPet);
     Console.WriteLine("✅ Pet cadastrado com sucesso!");
     Thread.Sleep(2000);
-    ExibirMenu();
+    ExibirMenuDeCadastro();
   }
 
-// Método auxiliar para exibir clientes na hora de vincular um pet a um dono
-  private void ExibirClientesParaSelecao()
-  {
-    Console.WriteLine("\n--- Clientes Cadastrados ---");
-    foreach (var cliente in Clientes)
-    {
-      Console.WriteLine($"Nome: {cliente.Nome} {cliente.Sobrenome} | CPF: {cliente.Cpf}");
-    }
-    Console.WriteLine();
-  }
-// Método para cadastrar cliente
+  // Método para cadastrar cliente
   private void CadastrarCliente()
   {
     Console.WriteLine("----- Cadastrar Cliente -----");
@@ -121,7 +117,49 @@ public class SitemaDoPetShop
     Clientes.Add(novoCliente);
     Console.WriteLine("Cliente cadastrado com sucesso!");
     Thread.Sleep(2000); // Pausa para o usuário ler a mensagem
-    ExibirMenu(); // Volta para o menu principal
+
+    Console.Clear();
+    Console.WriteLine("Deseja cadastrar um pet para este cliente? (s/n): ");
+    string? resposta = Console.ReadLine();
+
+    if (resposta?.ToLower() == "s")
+    {
+      Console.Clear();
+      Console.WriteLine("Vamos cadastrar um pet para o cliente " + nome + " " + sobrenome);
+
+      string petNome = ValidadorEntrada.ObterString("Digite o nome do pet: ");
+      int petIdade = ValidadorEntrada.ObterInteiro("Digite a idade do pet: ");
+      string petRaca = ValidadorEntrada.ObterString("Digite a raça do pet: ");
+      int petPeso = ValidadorEntrada.ObterInteiro("Digite o peso do pet (kg): ");
+      novoCliente.CadastrarPetParaCliente(petNome, petIdade, petRaca, petPeso);
+    }
+    ExibirMenuDeCadastro(); // Volta para o menu principal
   }
+
+  // Método auxiliar para exibir clientes na hora de vincular um pet a um dono
+  private void ExibirClientes()
+  {
+    Console.WriteLine("\n--- Clientes Cadastrados ---");
+    foreach (var cliente in Clientes)
+    {
+      Console.WriteLine($"Nome: {cliente.Nome} {cliente.Sobrenome} | CPF: {cliente.Cpf}");
+    }
+    Console.WriteLine("-----------------------------\n");
+  }
+
+// Método auxiliar para exibir pets cadastrados
+  private void ExibirPets()
+  {
+    Console.WriteLine("\n--- Pets Cadastrados ---");
+    foreach (var pet in Pets)
+    {
+      pet.ExibirInformacoes();
+      Console.WriteLine();
+    }
+    Console.WriteLine("-------------------------\n");
+  }
+
+  
+
 
 }

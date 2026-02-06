@@ -1,13 +1,14 @@
-﻿namespace PetShop.infraestrutura;
+﻿namespace PetShop.Modelos;
 using PetShop.Modelos;
+
 public class Medico
 {
   public string Nome { get; set; }
   public string Especialidade { get; set; }
   public string Telefone { get; set; }
 
-  List<Pet> PetsAtendidos { get; set; } = new();
-  List<Consulta> Consultas { get; set; } = new();
+  public List<Pet> PetsAtendidos { get; set; } = new();
+  public List<Consulta> Consultas { get; set; } = new();
 
   public Medico(string nome, string especialidade, string telefone)
   {
@@ -28,7 +29,7 @@ public class Medico
     Consulta novaConsulta = new Consulta(pet, this, data);
     Consultas.Add(novaConsulta);
     PetsAtendidos.Add(pet);
-    Console.WriteLine($"Consulta agendada para {pet.nome} com o Dr. {Nome} no dia {data.ToShortDateString()}");
+    Console.WriteLine($"Consulta agendada para {pet.Nome} com o Dr. {Nome} no dia {data.ToShortDateString()}");
   }   
 
   

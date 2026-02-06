@@ -1,7 +1,5 @@
 ﻿namespace PetShop.Modelos;
 
-using PetShop.infraestrutura;
-
 public class Cliente
 {
   public String Nome { get; set; }
@@ -18,10 +16,12 @@ public class Cliente
     this.Telefone = telefone;
   }
 
-  public void CadastrarPet(Pet pet)
+  public void CadastrarPetParaCliente(String nome, int idade, string raca, int peso)
   {
+    Pet pet = new Pet(nome, idade, raca, peso);
     Pets.Add(pet);
-    Console.WriteLine($"✅ Pet '{pet.nome}' adicionado ao cliente {Nome}!");
+    Console.Clear();
+    Console.WriteLine($"Pet {nome} cadastrado com sucesso para o cliente {Nome} {Sobrenome}!");
   }
 
   public void ExibirPets()
