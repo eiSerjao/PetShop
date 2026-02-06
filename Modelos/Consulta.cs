@@ -14,4 +14,9 @@ public class Consulta
     this.Medico = medico;
     this.Data = data;
   }
+
+  public void ExibirInformacoes()
+  {
+    Console.WriteLine($"Consulta para o pet {Pet.Nome} com o Dr. {Medico.Nome} no dia {Data.ToShortDateString()}");
+  }
 }

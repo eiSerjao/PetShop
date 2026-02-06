@@ -6,14 +6,16 @@ public class Medico
   public string Nome { get; set; }
   public string Especialidade { get; set; }
   public string Telefone { get; set; }
+  public string Cpf { get; set; }
 
   public List<Pet> PetsAtendidos { get; set; } = new();
   public List<Consulta> Consultas { get; set; } = new();
 
-  public Medico(string nome, string especialidade, string telefone)
+  public Medico(string nome, string especialidade, string cpf, string telefone)
   {
     this.Nome = nome;
     this.Especialidade = especialidade;
+    this.Cpf = cpf;
     this.Telefone = telefone;
   }
 

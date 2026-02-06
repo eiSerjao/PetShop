@@ -44,6 +44,24 @@ public static class ValidadorEntrada
     }
   }
 
+  public static DateTime ObterData(string mensagem)
+  {
+    DateTime data;
+
+    while (true)
+    {
+      Console.Write(mensagem);
+      string? entrada = Console.ReadLine();
+
+      if (DateTime.TryParse(entrada, out data))
+      {
+        return data;
+      }
+
+      Console.WriteLine("❌ Erro: Digite uma data válida (ex: 01/01/2024)!");
+    }
+  }
+
   /// <summary>
   /// Obtém um decimal validado do usuário
   /// </summary>
