@@ -142,6 +142,9 @@ public class SitemaDoPetShop
       string petRaca = ValidadorEntrada.ObterString("Digite a raça do pet: ");
       int petPeso = ValidadorEntrada.ObterInteiro("Digite o peso do pet (kg): ");
       novoCliente.CadastrarPetParaCliente(petNome, petIdade, petRaca, petPeso);
+      AdicionarPet(novoCliente.Pets.Last());
+      Console.WriteLine("Pet cadastrado com sucesso para o cliente!");
+      Thread.Sleep(2000);
     }
     ExibirMenuDeCadastro(); // Volta para o menu principal
   }
@@ -204,6 +207,7 @@ public class SitemaDoPetShop
   // Método auxiliar para exibir clientes na hora de vincular um pet a um dono
   private void ExibirClientes()
   {
+    Console.Clear();
     Console.WriteLine("\n--- Clientes Cadastrados ---");
     foreach (var cliente in Clientes)
     {
@@ -219,6 +223,7 @@ public class SitemaDoPetShop
   // Método auxiliar para exibir pets cadastrados
   private void ExibirPets()
   {
+    Console.Clear();
     Console.WriteLine("\n--- Pets Cadastrados ---");
     foreach (var pet in Pets)
     {
@@ -248,6 +253,10 @@ public class SitemaDoPetShop
     ExibirMenuDeCadastro();
   }
 
+  public void AdicionarPet(Pet pet)
+  {
+    Pets.Add(pet);
+  }
 
 
 }

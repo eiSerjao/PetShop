@@ -11,7 +11,7 @@ public class Pet
   public string Raca { get; set; }
   public int Peso { get; set; }
   public Cliente? Dono { get; set; }
-  
+
 
   public Pet(string nome, int idade, string raca, int peso)
   {
@@ -22,22 +22,13 @@ public class Pet
     this.Dono = null;
   }
 
-  public Pet(string nome, int idade, string raca, int peso, Cliente dono)
-  {
-    this.Nome = nome;
-    this.Idade = idade;
-    this.Raca = raca;
-    this.Peso = peso;
-    this.Dono = dono;
-  }
-
   public void ExibirInformacoes()
   {
     Console.WriteLine($"Nome: {Nome}");
     Console.WriteLine($"Idade: {Idade} anos");
     Console.WriteLine($"Raça: {Raca}");
     Console.WriteLine($"Peso: {Peso} kg");
-    
+
     if (Dono != null)
     {
       Console.WriteLine($"Dono: {Dono.Nome} {Dono.Sobrenome}");
