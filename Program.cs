@@ -32,9 +32,9 @@ cliente3.VincularPetExistente(pet4);
 cliente4.VincularPetExistente(pet5);
 
 // Criar 3 Médicos
-Medico medico1 = new Medico("Dr. Lucas", "Cardiologia Veterinária", "123.456.789-00", "(11) 98765-4321");
-Medico medico2 = new Medico("Dra. Sofia", "Dermatologia Veterinária", "987.654.321-00", "(21) 91234-5678");
-Medico medico3 = new Medico("Dr. Rafael", "Cirurgia Veterinária", "456.789.123-00", "(31) 99876-5432");
+Medico medico1 = new Medico("Lucas", "Cardiologia Veterinária", "123.456.789-00", "(11) 98765-4321");
+Medico medico2 = new Medico("Sofia", "Dermatologia Veterinária", "987.654.321-00", "(21) 91234-5678");
+Medico medico3 = new Medico("Rafael", "Cirurgia Veterinária", "456.789.123-00", "(31) 99876-5432");
 
 // Adicionar na Lista
 List<Medico> medicos = new List<Medico> { medico1, medico2, medico3 };

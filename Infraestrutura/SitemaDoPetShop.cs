@@ -30,7 +30,8 @@ public class SitemaDoPetShop
     Console.WriteLine("5. Exibir Médicos");
     Console.WriteLine("6. Exibir Clientes");
     Console.WriteLine("7. Exibir Pets");
-    Console.WriteLine("8. Sair");
+    Console.WriteLine("8. Exibir Consultas");
+    Console.WriteLine("9. Sair");
     Console.Write("Escolha uma opção: ");
 
     string? opcao = Console.ReadLine();
@@ -58,6 +59,9 @@ public class SitemaDoPetShop
         ExibirPets();
         break;
       case "8":
+        ExibirMenuDeConsultas();
+        break;
+      case "9":
         Console.WriteLine("Obrigado por usar o sistema do PetShop!");
         return;
       default:
@@ -68,6 +72,7 @@ public class SitemaDoPetShop
   // Metodos para cadastrar cliente, cadastrar pet, exibir clientes e exibir pets
   private void CadastrarPet()
   {
+    Console.Clear();
     Console.WriteLine("----- Cadastrar Pet -----");
     string nome = ValidadorEntrada.ObterString("Digite o nome do pet: ");
     int idade = ValidadorEntrada.ObterInteiro("Digite a idade do pet: ");
@@ -89,7 +94,7 @@ public class SitemaDoPetShop
       }
       else
       {
-        ExibirClientes();
+        ExibirClientesPet();
         string? cpfDono = ValidadorEntrada.ObterString("Digite o CPF do dono: ");
 
         // Procurar cliente pela CPF
@@ -108,15 +113,20 @@ public class SitemaDoPetShop
       }
     }
 
+
+
     Pets.Add(novoPet);
     Console.WriteLine("✅ Pet cadastrado com sucesso!");
     Thread.Sleep(2000);
     ExibirMenuDeCadastro();
+
+
   }
 
   // Método para cadastrar cliente
   private void CadastrarCliente()
   {
+    Console.Clear();
     Console.WriteLine("----- Cadastrar Cliente -----");
     string nome = ValidadorEntrada.ObterString("Digite o nome do cliente: ");
     string sobrenome = ValidadorEntrada.ObterString("Digite o sobrenome do cliente: ");
@@ -175,7 +185,7 @@ public class SitemaDoPetShop
 
     if (pet == null)
     {
-      Console.WriteLine("❌ Pet não encontrado! Certifique-se de que o pet está cadastrado.");
+      Console.WriteLine("\b❌ Pet não encontrado! Certifique-se de que o pet está cadastrado.");
       Thread.Sleep(2000);
       ExibirMenuDeCadastro();
       return;
@@ -198,9 +208,43 @@ public class SitemaDoPetShop
     DateTime dataConsulta = ValidadorEntrada.ObterData("Digite a data da consulta (dd/MM/yyyy): ");
     Consulta novaConsulta = new Consulta(pet, medico, dataConsulta);
     Consultas.Add(novaConsulta);
+    medico.AgendarConsulta(pet, dataConsulta);
     Console.WriteLine("Consulta cadastrada com sucesso!");
     Thread.Sleep(2000);
     ExibirMenuDeCadastro();
+
+  }
+
+  private void ExibirMenuDeConsultas()
+  {
+    Console.Clear();
+    ExibirMedicosConsultar();
+    string? medicoNome = ValidadorEntrada.ObterString("Digite o nome do médico para ver suas consultas: ");
+    Medico? medico = Medicos.FirstOrDefault(m => m.Nome.Equals(medicoNome, StringComparison.OrdinalIgnoreCase));
+
+    if (medico == null)
+    {
+      Console.WriteLine("❌ Médico não encontrado! Certifique-se de que o médico está cadastrado.");
+      Thread.Sleep(2000);
+      ExibirMenuDeCadastro();
+      return;
+    }
+
+    Console.Clear();
+    Console.WriteLine($"--- Consultas do Dr. {medico.Nome} ---");
+    if (medico.Consultas.Count == 0)
+    {
+      Console.WriteLine("Nenhuma consulta agendada para este médico.");
+      Thread.Sleep(2000);
+      ExibirMenuDeCadastro();
+      return;
+    }
+
+    foreach (var consulta in medico.Consultas)
+    {
+      consulta.ExibirInformacoes();
+      Console.WriteLine();
+    }
 
   }
 
@@ -218,6 +262,17 @@ public class SitemaDoPetShop
     Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
     Console.ReadLine();
     ExibirMenuDeCadastro();
+  }
+
+  private void ExibirClientesPet()
+  {
+    Console.Clear();
+    Console.WriteLine("\n--- Clientes Cadastrados ---");
+    foreach (var cliente in Clientes)
+    {
+      Console.WriteLine($"Nome: {cliente.Nome} {cliente.Sobrenome} | CPF: {cliente.Cpf}");
+    }
+    Console.WriteLine("-----------------------------\n");
   }
 
   // Método auxiliar para exibir pets cadastrados
@@ -251,6 +306,18 @@ public class SitemaDoPetShop
     Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
     Console.ReadLine();
     ExibirMenuDeCadastro();
+  }
+
+  private void ExibirMedicosConsultar()
+  {
+    Console.Clear();
+    Console.WriteLine("\n--- Médicos Cadastrados ---");
+    foreach (var medico in Medicos)
+    {
+      medico.ExibirInformacoes();
+      Console.WriteLine();
+    }
+    Console.WriteLine("---------------------------\n");
   }
 
   public void AdicionarPet(Pet pet)
